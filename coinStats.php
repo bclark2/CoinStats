@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -51,14 +50,9 @@
             color: #fff !important;
         }
     </style>
-
 </head>
-
 <body>
-
-
     <header>
-
         <!--Navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
@@ -71,7 +65,6 @@
             </div>
         </nav>
         <!--/.Navbar-->
-
     </header>
 <?php
     echo '<main>';
@@ -90,137 +83,112 @@
                 echo '</div>';
             echo '</div>';
             //<!--/.First row-->
+    
+            // set HTTP header
+            $headers = array(
+                'Content-Type: application/json',
+            );
 
-            
-                        // set HTTP header
-                        $headers = array(
-                            'Content-Type: application/json',
-                        );
+            //the kind folks at coinmarket cap, remember <= 10 hits per/min
+            $url = 'https://api.coinmarketcap.com/v1/ticker/?limit=0';
 
-                        //the kind folks at coinmarket cap, remember <= 10 hits per/min
-                        $url = 'https://api.coinmarketcap.com/v1/ticker/?limit=0';
-                        
-                        // Open connection
-                        $ch = curl_init();
-                        
-                        // Set the url, number of GET vars, GET data
-                        curl_setopt($ch, CURLOPT_URL, $url);
-                        curl_setopt($ch, CURLOPT_POST, false);
-                        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
-                        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                        
-                        // Execute request
-                        $result = curl_exec($ch);
-                        
-                        // Close connection
-                        
-                        curl_close($ch);
-                        
-                        // get the result and parse to JSON
-                        $result_arr = json_decode($result,1);
-                        
-                        /*
-                        More precise stats if you are interested
-                        $sevenDayPerformance = array();
+            // Open connection
+            $ch = curl_init();
 
-                        foreach($result_arr as $data) {
-                            $sevenDayPerformance[] = $data['percent_change_7d'];
-                        }
+            // Set the url, number of GET vars, GET data
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, false);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-                        var_dump(array_sum($sevenDayPerformance) / count($result_arr));
+            // Execute request
+            $result = curl_exec($ch);
 
-                        $twentyFourHourPerf = array();
-                        
+            // Close connection
 
-                        
-                        $price = array();
-                        foreach($result_arr as $data) {
-                            $price[] = $data['price_usd'];
-                        } 
+            curl_close($ch);
 
-                        $marketCap = array();
-                        foreach ($result_arr as $data) {
+            // get the result and parse to JSON
+            $result_arr = json_decode($result,1);
 
-                            $marketCap[] = $data['market_cap_usd'];                            
-                        }
+            /*
+            Market total stats if you are interested
+            $sevenDayPerformance = array();
+            foreach($result_arr as $data) {
+                $sevenDayPerformance[] = $data['percent_change_7d'];
+            }
 
-                        //var_dump(number_format(array_sum($marketCap)));//
+            var_dump(array_sum($sevenDayPerformance) / count($result_arr));
 
-                        
-                            var_dump(intval($marketCap));
-                        
+            $twentyFourHourPerf = array();
+            $price = array();
+            foreach($result_arr as $data) {
+                $price[] = $data['price_usd'];
+            } 
 
+            $marketCap = array();
+            foreach ($result_arr as $data) {
+                $marketCap[] = $data['market_cap_usd'];                            
+            }
 
-                        //var_dump($price);
-                        //var_dump(array_sum($price) / count($result_arr));
-                        //var_dump(array_sum($price));
-                        */
+            var_dump(number_format(array_sum($marketCap)));
+            var_dump(intval($marketCap));
+            var_dump($price);
+            var_dump(array_sum($price) / count($result_arr));
+            var_dump(array_sum($price));
+            */
 
            echo '<hr class="extra-margins">';
-
-            
+ 
             foreach ($result_arr as $data ) {
-    if(gettype($data) == 'array') {
-
-            
+                    if(gettype($data) == 'array') {
+                        
                 //Second row
             echo '<div class="row">';
                 //Second columnn
                 echo '<div class="col-lg-4">';
                     //Card
                    echo '<div class="card wow fadeIn" data-wow-delay="0.4s">';
-
-                        //Card image
-                        
-
                         //Card content
                        echo '<div class="card-body">';
                             //Title
-                           echo '<h4 class="card-title">' . $data['name'] . '</h4>';
+                           echo '<h4 class="card-title">' . $data['name']   . '</h4>';
                            echo '<h4 class="card-title">' . $data['symbol'] . '</h4>';
                             //Text
-                           echo '<p class="card-text">' . '<b>' . 'PRICE-USD: ' . '</b>' . $data['price_usd'] . '</p>';
-                           echo '<p class="card-text">' . '<b>' . '24 HOUR VOLUME-USD: ' . '</b>'. $data['24h_volume_usd'] . '</p>';
-                           echo '<p class="card-text">' . '<b>' . 'MARKET CAP-USD: ' . '</b>'. $data['market_cap_usd'] . '</p>';
-                           echo '<p class="card-text">' . '<b>' . 'AVAILABLE SUPPLY: ' . '</b>'. $data['available_supply'] . '</p>';
-                           echo '<p class="card-text">' . '<b>' . 'TOTAL SUPPLY: ' . '</b>'. $data['total_supply'] . '</p>';
-                           echo '<p class="card-text">' . '<b>' . 'MAX SUPPLY: ' . '</b>'. $data['max_supply'] . '</p>';
-                           if($data['percent_change_1h'] > 0){
+                           echo '<p class="card-text">' . '<b>' . 'PRICE-USD: '          . '</b>' . $data['price_usd']        . '</p>';
+                           echo '<p class="card-text">' . '<b>' . '24 HOUR VOLUME-USD: ' . '</b>' . $data['24h_volume_usd']   . '</p>';
+                           echo '<p class="card-text">' . '<b>' . 'MARKET CAP-USD: '     . '</b>' . $data['market_cap_usd']   . '</p>';
+                           echo '<p class="card-text">' . '<b>' . 'AVAILABLE SUPPLY: '   . '</b>' . $data['available_supply'] . '</p>';
+                           echo '<p class="card-text">' . '<b>' . 'TOTAL SUPPLY: '       . '</b>' . $data['total_supply']     . '</p>';
+                           echo '<p class="card-text">' . '<b>' . 'MAX SUPPLY: '         . '</b>' . $data['max_supply']       . '</p>';
+                           if($data['percent_change_1h'] > 0) {
                                 echo '<p class="card text-white bg-success mb-3">' . '<b>' . 'PERCENT CHANGE 1 HOUR: ' . '</b>'. $data['percent_change_1h'] . '</p>';
                            } else {
                                 echo '<p class="card text-white bg-danger mb-3">' . '<b>' . 'PERCENT CHANGE 1 HOUR: ' . '</b>'. $data['percent_change_1h'] . '</p>';
                            }
-                           if($data['percent_change_24h'] > 0){
+                           if($data['percent_change_24h'] > 0) {
                                 echo '<p class="card text-white bg-success mb-3">' . '<b>' . 'PERCENT CHANGE 24 HOURS: ' . '</b>'. $data['percent_change_24h'] . '</p>';
                            } else {
                                 echo '<p class="card text-white bg-danger mb-3">' . '<b>' . 'PERCENT CHANGE 24 HOURS: ' . '</b>'. $data['percent_change_24h'] . '</p>';                     
                            }
-
-                           if($data['percent_change_7d'] > 0){
+                           if($data['percent_change_7d'] > 0) {
                                 echo '<p class="card text-white bg-success mb-3">' . '<b>' . 'PERCENT CHANGE 7 DAYS: ' . '</b>'. $data['percent_change_7d'] . '</p>';
                            } else {
                                 echo '<p class="card text-white bg-danger mb-3">' . '<b>' . 'PERCENT CHANGE 7 DAYS: ' . '</b>'. $data['percent_change_7d'] . '</p>';
                            }
 
-
                         echo '</div>';
-
                     echo '</div>';
-                    //Card
-
+                    //Card end
                echo '</div>';
 
-            echo '</div>'; //end php here
-
+            echo '</div>';
+        } 
     } 
-    
-} 
-
             //<!--/.Second row-->
         echo '</div>'; 
         //<!--/.Main layout-->
-
     echo '</main>'; ?>
 
     <!--Footer-->
