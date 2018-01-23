@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!-- Thanks to the kind folks at mdbootstrap.com --> 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -272,13 +272,13 @@
 
         <!--Call to action-->
         <!--<div class="call-to-action">
-            <h4 class="mb-5">Material Design for Bootstrap</h4>
+            <h4 class="mb-5"></h4>
             <ul>
                 <li>
-                    <h5>Get our UI KIT for free</h5>
+                    <h5></h5>
                 </li>
-                <li><a target="_blank" href="https://mdbootstrap.com/getting-started/" class="btn btn-primary" rel="nofollow">Sign up!</a></li>
-                <li><a target="_blank" href="https://mdbootstrap.com/material-design-for-bootstrap/" class="btn btn-default" rel="nofollow">Learn more</a></li>
+                <li><a target="_blank" href="#" class="btn btn-primary" rel="nofollow">#</a></li>
+                <li><a target="_blank" href="#" class="btn btn-default" rel="nofollow">#</a></li>
             </ul>
         </div>-->
         <!--/.Call to action-->
